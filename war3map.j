@@ -8621,7 +8621,7 @@ set udg_JUNLIAN=GetTriggerUnit()
 call DisplayTextToForce(GetPlayersAll(),"军师命我前来督促粮草！")
 call DisplayTextToForce(GetPlayersAll(),("李严："+("粮草已备好，请将军一路小心！"+"另外还有小小的心意请将军笑纳")))
 set udg_DIANshua[19]=GetRectCenter(gg_rct______________061)
-call CreateNUnitsAtLoc(1,'enec',Player(8),udg_DIANshua[19],bj_UNIT_FACING)
+call CreateNUnitsAtLoc(1,'enec',Player(8),GetUnitLoc(gg_unit_Hant_0005),bj_UNIT_FACING)
 call IssueTargetOrder(GetLastCreatedUnit(),"move",udg_JUNLIAN)
 call AdjustPlayerStateBJ((1000*GetUnitLevel(gg_unit_Hpal_0031)),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_GOLD)
 call DisableTrigger(GetTriggeringTrigger())
@@ -9302,15 +9302,6 @@ endif
 return true
 endfunction
 function Trig_shibai_Actions takes nothing returns nothing
-call PolledWait(0.50)
-call RemoveUnit(GetTriggerUnit())
-call CinematicFadeBJ(bj_CINEFADETYPE_FADEIN,6.00,"ReplaceableTextures\\CameraMasks\\SpecialSplatMask.blp",100.00,50.00,50.00,0.00)
-call CinematicModeBJ(true,GetPlayersAll())
-call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(),Player(8),'Hant',"诸葛亮",GetRectCenter(gg_rct_kai_shi),null,"再不能临阵讨贼矣！悠悠苍天，曷此其极！",bj_TIMETYPE_ADD,2.00,true)
-call CinematicModeBJ(false,GetPlayersAll())
-call DisplayTimedTextToForce(GetPlayersAll(),60.00,"|Cffff0000孔明已经战死，游戏失败，请再接再厉！\n60秒后游戏结束，请各位利用这些时间自己检讨一下！")
-call PolledWait(60.00)
-call TriggerExecute(gg_trg_SB)
 endfunction
 function InitTrig_shibai takes nothing returns nothing
 set gg_trg_shibai=CreateTrigger()
@@ -9325,10 +9316,6 @@ endif
 return true
 endfunction
 function Trig_shibai________2_Actions takes nothing returns nothing
-call RemoveUnit(GetTriggerUnit())
-call CinematicFadeBJ(bj_CINEFADETYPE_FADEIN,6.00,"ReplaceableTextures\\CameraMasks\\SpecialSplatMask.blp",100.00,50.00,50.00,0.00)
-call DisplayTimedTextToForce(GetPlayersAll(),60.00,"|Cffff0000杨仪已经战死！由于魏延的叛乱，蜀国很快进入动荡不安的局面；魏国乘机入侵...\n60秒后游戏结束，请各位利用这些时间自己检讨一下！")
-call TriggerSleepAction(60.00)
 endfunction
 function InitTrig_shibai________2 takes nothing returns nothing
 set gg_trg_shibai________2=CreateTrigger()
@@ -9343,12 +9330,6 @@ endif
 return true
 endfunction
 function Trig_shibai_______u_Actions takes nothing returns nothing
-call RemoveUnit(GetTriggerUnit())
-call DestroyTrigger(gg_trg_shuabingXC2)
-call DisplayTimedTextToForce(GetPlayersAll(),5.00,"|Cffff0000孟达已经战死！新城失守！")
-call ShowUnitHide(gg_unit_harm_0152)
-call DestroyTrigger(gg_trg_B_G_Z)
-call DestroyTrigger(GetTriggeringTrigger())
 endfunction
 function InitTrig_shibai_______u takes nothing returns nothing
 set gg_trg_shibai_______u=CreateTrigger()
@@ -20901,7 +20882,7 @@ call CreateItemLoc('grsl',udg_DIANjineng[31])
 else
 endif
 call RemoveLocation(udg_DIANjineng[31])
-call PolledWait(120.00)
+call PolledWait(20.00)
 if(Trig____________________004_Func006C())then
 set udg_DIANjineng[30]=GetRandomLocInRect(gg_rct______________025)
 call ReviveHeroLoc(gg_unit_Naka_0069,udg_DIANjineng[30],true)
@@ -20937,7 +20918,7 @@ call TriggerRegisterUnitEvent(gg_trg____________________004,gg_unit_Naka_0069,EV
 call TriggerAddAction(gg_trg____________________004,function Trig____________________004_Actions)
 endfunction
 function Trig____________________004_______u_Actions takes nothing returns nothing
-call PolledWait(60.00)
+call PolledWait(20.00)
 call ReviveHeroLoc(gg_unit_Nklj_0004,GetRectCenter(gg_rct________031),true)
 call DisplayTimedTextToForce(GetPlayersAll(),5.00,"|Cff00ff00项羽之魂再次出现在地下密室！")
 endfunction
