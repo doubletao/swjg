@@ -1458,9 +1458,8 @@ local trigger t
 local real life
 set gg_unit_Hant_0005=CreateUnit(p,'Hant',-1175.3,-5053.7,95.110)
 call SetUnitState(gg_unit_Hant_0005,UNIT_STATE_MANA,190)
-call UnitAddItemToSlotById(gg_unit_Hant_0005,'stel',0)
-call UnitAddItemToSlotById(gg_unit_Hant_0005,'spsh',1)
-call UnitAddItemToSlotById(gg_unit_Hant_0005,'belv',2)
+call UnitAddAbilityBJ('A02Y',gg_unit_Hant_0005)
+call UnitAddAbilityBJ('ACm3',gg_unit_Hant_0005)
 set gg_unit_nemi_0110=CreateUnit(p,'nemi',-6184.2,-2717.3,30.000)
 call IssueImmediateOrder(gg_unit_nemi_0110,"")
 call IssueImmediateOrder(gg_unit_nemi_0110,"")
@@ -4061,6 +4060,8 @@ call SelectHeroSkill(gg_unit_Hpb1_0091,'AHtc')
 call SelectHeroSkill(gg_unit_Hpb1_0091,'AHtc')
 call SelectHeroSkill(gg_unit_Hpb1_0091,'AHtc')
 call SelectHeroSkill(gg_unit_Hpb1_0091,'AHtc')
+call UnitAddAbilityBJ('A02Y',gg_unit_Hpb1_0091)
+call UnitAddAbilityBJ('ACm3',gg_unit_Hpb1_0091)
 set u=CreateUnit(p,'hcth',-5287.9,13160.6,337.407)
 set u=CreateUnit(p,'hcth',-5284.1,12854.3,1.738)
 set gg_unit_nmed_0096=CreateUnit(p,'nmed',4740.3,9952.7,184.981)
@@ -8587,12 +8588,12 @@ call CreateItemLoc(udg_wplx[GetRandomInt(170,180)],udg_DIANdiaol[5])
 else
 endif
 if(Trig_LIANCHAO_Func008C())then
-call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(11,22)],udg_JUNLIAN)
+call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(64,80)],udg_JUNLIAN)
 call DisplayTextToForce(GetPlayersAll(),("后主刘禅恩赐"+(GetItemName(GetLastCreatedItem())+"犒赏各位将军！")))
 else
 endif
 if(Trig_LIANCHAO_Func009C())then
-call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(23,62)],udg_JUNLIAN)
+call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(64,80)],udg_JUNLIAN)
 call DisplayTextToForce(GetPlayersAll(),("后主刘禅恩赐"+(GetItemName(GetLastCreatedItem())+"犒赏各们将军！")))
 else
 endif
@@ -8620,12 +8621,10 @@ set udg_JUNLIAN=null
 set udg_JUNLIAN=GetTriggerUnit()
 call DisplayTextToForce(GetPlayersAll(),"军师命我前来督促粮草！")
 call DisplayTextToForce(GetPlayersAll(),("李严："+("粮草已备好，请将军一路小心！"+"另外还有小小的心意请将军笑纳")))
-set udg_DIANshua[19]=GetRectCenter(gg_rct______________061)
-call CreateNUnitsAtLoc(1,'enec',Player(8),udg_DIANshua[19],bj_UNIT_FACING)
+call CreateNUnitsAtLoc(1,'enec',Player(8),GetUnitLoc(gg_unit_Hant_0005),bj_UNIT_FACING)
 call IssueTargetOrder(GetLastCreatedUnit(),"move",udg_JUNLIAN)
 call AdjustPlayerStateBJ((1000*GetUnitLevel(gg_unit_Hpal_0031)),GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_GOLD)
 call DisableTrigger(GetTriggeringTrigger())
-call RemoveLocation(udg_DIANshua[19])
 endfunction
 function InitTrig_LIANCHAO2 takes nothing returns nothing
 set gg_trg_LIANCHAO2=CreateTrigger()
@@ -9237,17 +9236,17 @@ endfunction
 function Trig_MDa_Actions takes nothing returns nothing
 call DisableTrigger(GetTriggeringTrigger())
 call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(),'mort'))
-call IssueImmediateOrder(gg_unit_Hpb1_0091,"holdposition")
+call IssuePointOrderLoc(gg_unit_Hpb1_0091,"move",GetUnitLoc(gg_unit_Hant_0005))
 call SetUnitInvulnerable(gg_unit_Hpb1_0091,false)
 call TransmissionFromUnitWithNameBJ(GetPlayersAll(),gg_unit_Hpb1_0091,"孟达",null,"人言孔明多心，今观此事可知矣。",bj_TIMETYPE_ADD,0,true)
 call ForGroupBJ(GetUnitsInRectOfPlayer(gg_rct________038,Player(PLAYER_NEUTRAL_PASSIVE)),function Trig_MDa_Func006A)
 call DestroyGroup(bj_lastCreatedGroup)
-call AddHeroXPSwapped(3000,GetTriggerUnit(),true)
-call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,10)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,10)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,10)
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1000)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1000)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1000)
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,"送信（完成）")
-call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+10及3000点经验的奖励。"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1000及300000点经验的奖励。"))
 call DisplayTextToForce(GetPlayersAll(),"|cffffcc00新城的刷兵被开启了，守住新城每一波都将获得木材奖励；孟达死去后会关闭刷兵和奖励。")
 call ShowUnitShow(gg_unit_Nmag_0108)
 call ShowUnitShow(gg_unit_harm_0152)
@@ -9302,15 +9301,6 @@ endif
 return true
 endfunction
 function Trig_shibai_Actions takes nothing returns nothing
-call PolledWait(0.50)
-call RemoveUnit(GetTriggerUnit())
-call CinematicFadeBJ(bj_CINEFADETYPE_FADEIN,6.00,"ReplaceableTextures\\CameraMasks\\SpecialSplatMask.blp",100.00,50.00,50.00,0.00)
-call CinematicModeBJ(true,GetPlayersAll())
-call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(),Player(8),'Hant',"诸葛亮",GetRectCenter(gg_rct_kai_shi),null,"再不能临阵讨贼矣！悠悠苍天，曷此其极！",bj_TIMETYPE_ADD,2.00,true)
-call CinematicModeBJ(false,GetPlayersAll())
-call DisplayTimedTextToForce(GetPlayersAll(),60.00,"|Cffff0000孔明已经战死，游戏失败，请再接再厉！\n60秒后游戏结束，请各位利用这些时间自己检讨一下！")
-call PolledWait(60.00)
-call TriggerExecute(gg_trg_SB)
 endfunction
 function InitTrig_shibai takes nothing returns nothing
 set gg_trg_shibai=CreateTrigger()
@@ -9325,10 +9315,6 @@ endif
 return true
 endfunction
 function Trig_shibai________2_Actions takes nothing returns nothing
-call RemoveUnit(GetTriggerUnit())
-call CinematicFadeBJ(bj_CINEFADETYPE_FADEIN,6.00,"ReplaceableTextures\\CameraMasks\\SpecialSplatMask.blp",100.00,50.00,50.00,0.00)
-call DisplayTimedTextToForce(GetPlayersAll(),60.00,"|Cffff0000杨仪已经战死！由于魏延的叛乱，蜀国很快进入动荡不安的局面；魏国乘机入侵...\n60秒后游戏结束，请各位利用这些时间自己检讨一下！")
-call TriggerSleepAction(60.00)
 endfunction
 function InitTrig_shibai________2 takes nothing returns nothing
 set gg_trg_shibai________2=CreateTrigger()
@@ -9343,12 +9329,6 @@ endif
 return true
 endfunction
 function Trig_shibai_______u_Actions takes nothing returns nothing
-call RemoveUnit(GetTriggerUnit())
-call DestroyTrigger(gg_trg_shuabingXC2)
-call DisplayTimedTextToForce(GetPlayersAll(),5.00,"|Cffff0000孟达已经战死！新城失守！")
-call ShowUnitHide(gg_unit_harm_0152)
-call DestroyTrigger(gg_trg_B_G_Z)
-call DestroyTrigger(GetTriggeringTrigger())
 endfunction
 function InitTrig_shibai_______u takes nothing returns nothing
 set gg_trg_shibai_______u=CreateTrigger()
@@ -20485,7 +20465,6 @@ call SetPlayerStateBJ(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_FOOD_CAP,1)
 endfunction
 function InitTrig_WOYAO_____________________u takes nothing returns nothing
 set gg_trg_WOYAO_____________________u=CreateTrigger()
-call DisableTrigger(gg_trg_WOYAO_____________________u)
 call TriggerRegisterPlayerChatEvent(gg_trg_WOYAO_____________________u,Player(0),"一个英雄不够用",true)
 call TriggerRegisterPlayerChatEvent(gg_trg_WOYAO_____________________u,Player(1),"一个英雄不够用",true)
 call TriggerRegisterPlayerChatEvent(gg_trg_WOYAO_____________________u,Player(2),"一个英雄不够用",true)
@@ -20901,7 +20880,7 @@ call CreateItemLoc('grsl',udg_DIANjineng[31])
 else
 endif
 call RemoveLocation(udg_DIANjineng[31])
-call PolledWait(120.00)
+call PolledWait(20.00)
 if(Trig____________________004_Func006C())then
 set udg_DIANjineng[30]=GetRandomLocInRect(gg_rct______________025)
 call ReviveHeroLoc(gg_unit_Naka_0069,udg_DIANjineng[30],true)
@@ -20937,7 +20916,7 @@ call TriggerRegisterUnitEvent(gg_trg____________________004,gg_unit_Naka_0069,EV
 call TriggerAddAction(gg_trg____________________004,function Trig____________________004_Actions)
 endfunction
 function Trig____________________004_______u_Actions takes nothing returns nothing
-call PolledWait(60.00)
+call PolledWait(20.00)
 call ReviveHeroLoc(gg_unit_Nklj_0004,GetRectCenter(gg_rct________031),true)
 call DisplayTimedTextToForce(GetPlayersAll(),5.00,"|Cff00ff00项羽之魂再次出现在地下密室！")
 endfunction
@@ -23430,6 +23409,17 @@ call MultiboardSetItemValue(MultiboardGetItem(bj_lastCreatedMultiboard,GetConver
 call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFF336699前将军：关羽。汉末才无敌，云长独出群：神威能奋武，儒雅更知文。天日 \n心如镜，《春秋》义薄云。昭然垂万古，不止冠三分。人杰惟追古解良，士民争拜汉云长。桃园一日兄和弟，俎豆千秋帝与王。气挟风雷无匹敌，志垂日月有光芒。至今庙貌盈天下，古木寒鸦几夕阳。”")
 call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),("前将军"+GetUnitName(GetTriggerUnit())))
 call SetPlayerTechResearchedSwap('Rost',1,GetOwningPlayer(GetTriggerUnit()))
+call UnitAddAbilityBJ('A07N',GetTriggerUnit())
+call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()),'A07N',false)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00玄武套装"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00魔神套装"))
+call UnitAddAbilityBJ('A02Y',GetTriggerUnit())
+call UnitAddAbilityBJ('ACm3',GetTriggerUnit())
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1500及300000点经验的奖励。"))
 call EnableTrigger(gg_trg_WUHU_______u)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23470,6 +23460,17 @@ call MultiboardSetItemValue(MultiboardGetItem(bj_lastCreatedMultiboard,GetConver
 call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFF336699右将军：张飞。\n安喜曾闻鞭督邮，黄巾扫尽佐炎刘。虎牢关上声先震，长坂桥边水逆流。义释严颜安蜀境，智欺张合定中州。伐吴未克身先死，秋草长遗阆地愁。")
 call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),("右将军"+GetHeroProperName(GetTriggerUnit())))
 call SetPlayerTechResearchedSwap('Rost',1,GetOwningPlayer(GetTriggerUnit()))
+call UnitAddAbilityBJ('A07N',GetTriggerUnit())
+call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()),'A07N',false)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00玄武套装"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00魔神套装"))
+call UnitAddAbilityBJ('A02Y',GetTriggerUnit())
+call UnitAddAbilityBJ('ACm3',GetTriggerUnit())
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1500及300000点经验的奖励。"))
 call EnableTrigger(gg_trg_WUHU________2)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23513,6 +23514,17 @@ call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFF336699左将军：马超\n�
 call MultiboardSetItemValue(MultiboardGetItem(bj_lastCreatedMultiboard,GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())),3),(udg_ZF[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+"左将军"))
 call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),("左将军"+GetHeroProperName(GetTriggerUnit())))
 call SetPlayerTechResearchedSwap('Rost',1,GetOwningPlayer(GetTriggerUnit()))
+call UnitAddAbilityBJ('A07N',GetTriggerUnit())
+call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()),'A07N',false)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00玄武套装"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00魔神套装"))
+call UnitAddAbilityBJ('A02Y',GetTriggerUnit())
+call UnitAddAbilityBJ('ACm3',GetTriggerUnit())
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1500及300000点经验的奖励。"))
 call EnableTrigger(gg_trg_WUHU________3)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23559,6 +23571,17 @@ call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFF336699后将军：黄忠。
 call MultiboardSetItemValue(MultiboardGetItem(bj_lastCreatedMultiboard,GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())),3),(udg_ZF[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+"后将军"))
 call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),("后将军"+GetHeroProperName(GetTriggerUnit())))
 call SetPlayerTechResearchedSwap('Rost',1,GetOwningPlayer(GetTriggerUnit()))
+call UnitAddAbilityBJ('A07N',GetTriggerUnit())
+call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()),'A07N',false)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00玄武套装"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00魔神套装"))
+call UnitAddAbilityBJ('A02Y',GetTriggerUnit())
+call UnitAddAbilityBJ('ACm3',GetTriggerUnit())
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1500及300000点经验的奖励。"))
 call EnableTrigger(gg_trg_WUHU________4)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23611,6 +23634,17 @@ call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFF336699中护军：赵云。
 call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),("中护军"+GetHeroProperName(GetTriggerUnit())))
 call MultiboardSetItemValue(MultiboardGetItem(bj_lastCreatedMultiboard,GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())),3),(udg_ZF[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]+"中护军"))
 call SetPlayerTechResearchedSwap('Rost',1,GetOwningPlayer(GetTriggerUnit()))
+call UnitAddAbilityBJ('A07N',GetTriggerUnit())
+call SetPlayerAbilityAvailable(GetOwningPlayer(GetTriggerUnit()),'A07N',false)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00玄武套装"))
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"恭喜！你集齐了 |Cff00ff00魔神套装"))
+call UnitAddAbilityBJ('A02Y',GetTriggerUnit())
+call UnitAddAbilityBJ('ACm3',GetTriggerUnit())
+call AddHeroXPSwapped(300000,GetTriggerUnit(),true)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetTriggerUnit(),bj_MODIFYMETHOD_ADD,1500)
+call DisplayTextToForce(GetPlayersAll(),(GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"获得了所有属性+1500及300000点经验的奖励。"))
 call SetHeroLevel(gg_unit_Hant_0005,100,true)
 call ForForce(GetPlayersAll(),function Trig_WUHU________4_Func001Func011A)
 call DisplayTextToForce(GetPlayersAll(),"五虎重现,匡扶汉室有望.孔明升至100级.\n")
@@ -23780,18 +23814,18 @@ function Trig_FENGYONG_Actions takes nothing returns nothing
 if(Trig_FENGYONG_Func003C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call AdjustPlayerStateBJ(30000,Player(0),PLAYER_STATE_RESOURCE_GOLD)
 call DestroyTrigger(GetTriggeringTrigger())
 else
 if(Trig_FENGYONG_Func003Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call AdjustPlayerStateBJ(30000,Player(1),PLAYER_STATE_RESOURCE_GOLD)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23799,26 +23833,26 @@ if(Trig_FENGYONG_Func003Func001Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
 call AdjustPlayerStateBJ(30000,Player(2),PLAYER_STATE_RESOURCE_GOLD)
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call DestroyTrigger(GetTriggeringTrigger())
 else
 if(Trig_FENGYONG_Func003Func001Func001Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call AdjustPlayerStateBJ(30000,Player(3),PLAYER_STATE_RESOURCE_GOLD)
 call DestroyTrigger(GetTriggeringTrigger())
 else
 if(Trig_FENGYONG_Func003Func001Func001Func001Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call AdjustPlayerStateBJ(30000,Player(4),PLAYER_STATE_RESOURCE_GOLD)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23826,17 +23860,17 @@ if(Trig_FENGYONG_Func003Func001Func001Func001Func001Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
 call AdjustPlayerStateBJ(30000,Player(5),PLAYER_STATE_RESOURCE_GOLD)
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call DestroyTrigger(GetTriggeringTrigger())
 else
 if(Trig_FENGYONG_Func003Func001Func001Func001Func001Func001Func001C())then
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call AdjustPlayerStateBJ(30000,Player(6),PLAYER_STATE_RESOURCE_GOLD)
 call DestroyTrigger(GetTriggeringTrigger())
 else
@@ -23844,9 +23878,9 @@ if(Trig_FENGYONG_Func003Func001Func001Func001Func001Func001Func001Func001C())the
 call QuestMessageBJ(GetPlayersAll(),bj_QUESTMESSAGE_COMPLETED,("|cFF666600奋勇杀敌（任务完成）"+("奖励"+(GetUnitName(GetKillingUnitBJ())+"30点属性，30000金钱。"))))
 call DisplayTextToForce(GetPlayersAll(),(GetUnitName(gg_unit_Hant_0005)+"将军真乃虎将耶！"))
 call AdjustPlayerStateBJ(30000,Player(7),PLAYER_STATE_RESOURCE_GOLD)
-call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
-call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,30)
+call ModifyHeroStat(bj_HEROSTAT_STR,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_AGI,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
+call ModifyHeroStat(bj_HEROSTAT_INT,GetKillingUnitBJ(),bj_MODIFYMETHOD_ADD,300)
 call DestroyTrigger(GetTriggeringTrigger())
 else
 endif
